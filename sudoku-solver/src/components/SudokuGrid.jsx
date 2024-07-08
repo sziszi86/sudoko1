@@ -3,7 +3,7 @@ import React from 'react';
 const SudokuGrid = ({ grid, onChange }) => {
     const handleInputChange = (row, col, value) => {
         // Csak 1-9 közötti értékeket engedélyezünk
-        if (value === '' || (Number(value) >= 1 && Number(value) <= 9)) {
+        if (value === '' || (/^[1-9]$/.test(value))) {
             onChange(row, col, value);
         }
     };
@@ -23,6 +23,7 @@ const SudokuGrid = ({ grid, onChange }) => {
                         <input
                             key={`${rowIndex}-${colIndex}`}
                             type="text"
+                            maxLength="1"
                             value={cell || ''}
                             onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
                             className={className}
