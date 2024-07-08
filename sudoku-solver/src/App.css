@@ -112,3 +112,51 @@ button:hover {
 .sudoku-grid .border-bottom {
   border-bottom: 4px solid #000;
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+
+  form {
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  label {
+    font-size: 1em;
+  }
+
+  input[type="email"], select {
+    padding: 10px 14px;
+    font-size: 1em;
+    border-radius: 8px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 8px;
+  }
+
+  .sudoku-grid {
+    grid-template-columns: repeat(9, 35px);
+    grid-template-rows: repeat(9, 35px);
+    gap: 2px;
+    max-width: 315px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 15px;
+    border-width: 3px;
+  }
+
+  .sudoku-grid input {
+    font-size: 1.2em;
+    border-radius: 6px;
+  }
+}
