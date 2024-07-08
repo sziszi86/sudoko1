@@ -1,11 +1,19 @@
 import React from 'react';
+import './SudokuGrid.css';
 
-const SudokuGrid = ({ grid, onChange, errors }) => {
+const SudokuGrid = ({ grid, onChange, errors, solvedGrid, userInputs, setUserInputs }) => {
     const handleInputChange = (row, col, value) => {
         // Csak 1-9 közötti értékeket engedélyezünk
         if (value === '' || (/^[1-9]$/.test(value) && grid.length === 9) || (/^[1-4]$/.test(value) && grid.length === 4)) {
             onChange(row, col, value);
         }
+    };
+
+    const handleFocus = (row, col) => {
+        const newUserInputs = userInputs.map((r, rowIndex) =>
+            r.map((cell, colIndex) => (rowIndex === row && colIndex === col ? true : cell))
+        );
+        setUserInputs(newUserInputs);
     };
 
     return (
@@ -22,6 +30,12 @@ const SudokuGrid = ({ grid, onChange, errors }) => {
                     if (errors[rowIndex][colIndex]) {
                         className += " error";
                     }
+                    if (userInputs[rowIndex][colIndex]) {
+                        className += " user-input";
+                    }
+                    if (solvedGrid && solvedGrid[rowIndex][colIndex] !== grid[rowIndex][colIndex]) {
+                        className += " generated";
+                    }
                     return (
                         <input
                             key={`${rowIndex}-${colIndex}`}
@@ -29,6 +43,7 @@ const SudokuGrid = ({ grid, onChange, errors }) => {
                             maxLength="1"
                             value={cell || ''}
                             onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
+                            onFocus={() => handleFocus(rowIndex, colIndex)}
                             className={className}
                         />
                     );
