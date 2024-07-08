@@ -1,34 +1,32 @@
-// src/pages/SudokuSolverPage.jsx
 import React, { useState, useEffect } from 'react';
 import SudokuGrid from '../components/SudokuGrid';
-import { solveSudoku, isValidSudoku } from '../utils/sudokuSolver';
+import { solveSudoku, generateSudoku } from '../utils/sudokuSolver';
 
 const SudokuSolverPage = () => {
-    const [grid, setGrid] = useState(Array(9).fill(Array(9).fill(null)));
-    const [message, setMessage] = useState('');
+    const emptyGrid = Array(9).fill().map(() => Array(9).fill(null));
 
-    useEffect(() => {
+    const [difficulty, setDifficulty] = useState('easy');
+    const [grid, setGrid] = useState(() => {
         const savedGrid = JSON.parse(localStorage.getItem('sudoku-grid'));
-        if (savedGrid) {
-            setGrid(savedGrid);
-        }
-    }, []);
+        return savedGrid || emptyGrid;
+    });
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         localStorage.setItem('sudoku-grid', JSON.stringify(grid));
     }, [grid]);
 
     const handleChange = (row, col, value) => {
-        const newGrid = [...grid];
-        newGrid[row] = [...newGrid[row]];
-        newGrid[row][col] = value ? parseInt(value) : null;
+        const newGrid = grid.map((r, rowIndex) =>
+            r.map((cell, colIndex) => (rowIndex === row && colIndex === col ? (value ? parseInt(value) : null) : cell))
+        );
         setGrid(newGrid);
     };
 
     const handleSolve = () => {
-        const solvedGrid = solveSudoku(grid);
-        if (solvedGrid) {
-            setGrid(solvedGrid);
+        const gridCopy = grid.map(row => row.slice());
+        if (solveSudoku(gridCopy)) {
+            setGrid(gridCopy);
             setMessage('Sudoku solved!');
         } else {
             setMessage('This Sudoku puzzle is unsolvable.');
@@ -36,12 +34,20 @@ const SudokuSolverPage = () => {
     };
 
     const handleReset = () => {
-        setGrid(Array(9).fill(Array(9).fill(null)));
+        setGrid(generateSudoku(difficulty));
         setMessage('');
     };
 
     return (
         <div>
+            <label>
+                Difficulty:
+                <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </label>
             <SudokuGrid grid={grid} onChange={handleChange} />
             <button onClick={handleSolve}>Solve</button>
             <button onClick={handleReset}>Reset</button>
