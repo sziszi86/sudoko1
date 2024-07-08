@@ -27,6 +27,22 @@ const isValid = (grid, row, col, num) => {
         }
     }
 
+    // Ellenőrzés az átlókban
+    if (row === col) {
+        for (let i = 0; i < size; i++) {
+            if (grid[i][i] === num && i !== row) {
+                return false;
+            }
+        }
+    }
+    if (row + col === size - 1) {
+        for (let i = 0; i < size; i++) {
+            if (grid[i][size - 1 - i] === num && i !== row) {
+                return false;
+            }
+        }
+    }
+
     return true;
 };
 
@@ -103,33 +119,11 @@ export const isValidSudoku = (grid) => {
         for (let col = 0; col < size; col++) {
             const num = grid[row][col];
             if (num !== null) {
-                // Ellenőrizzük a sort
-                for (let x = 0; x < size; x++) {
-                    if (grid[row][x] === num && x !== col) {
-                        errors[row][x] = true;
-                        errors[row][col] = true;
-                    }
+                grid[row][col] = null; // Temporarily empty the cell
+                if (!isValid(grid, row, col, num)) {
+                    errors[row][col] = true;
                 }
-
-                // Ellenőrizzük az oszlopot
-                for (let x = 0; x < size; x++) {
-                    if (grid[x][col] === num && x !== row) {
-                        errors[x][col] = true;
-                        errors[row][col] = true;
-                    }
-                }
-
-                // Ellenőrizzük a 3x3-as blokkot
-                const startRow = row - (row % Math.sqrt(size));
-                const startCol = col - (col % Math.sqrt(size));
-                for (let i = 0; i < Math.sqrt(size); i++) {
-                    for (let j = 0; j < Math.sqrt(size); j++) {
-                        if (grid[i + startRow][j + startCol] === num && (i + startRow !== row || j + startCol !== col)) {
-                            errors[i + startRow][j + startCol] = true;
-                            errors[row][col] = true;
-                        }
-                    }
-                }
+                grid[row][col] = num; // Restore the cell
             }
         }
     }

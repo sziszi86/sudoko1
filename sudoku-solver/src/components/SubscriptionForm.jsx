@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import Modal from './Modal';
 
 const SubscriptionForm = () => {
@@ -18,7 +18,7 @@ const SubscriptionForm = () => {
 
     const handleCloseModal = () => {
         setShowModal(false);
-        navigate('/solver', { state: { difficulty } });
+        navigate('/solver', {state: {difficulty}});
     };
 
     return (
