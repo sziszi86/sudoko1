@@ -1,0 +1,14 @@
+/* src/App.css */
+.sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: 5px;
+  max-width: 300px;
+  margin: auto;
+}
+
+.sudoku-grid input {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
