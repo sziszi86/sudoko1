@@ -1,12 +1,22 @@
 const isValid = (grid, row, col, num) => {
     const size = grid.length;
     const boxSize = Math.sqrt(size);
+
+    // Ellenőrzés az adott sorban
     for (let x = 0; x < size; x++) {
-        if ((grid[row][x] === num && x !== col) || (grid[x][col] === num && x !== row)) {
+        if (grid[row][x] === num && x !== col) {
             return false;
         }
     }
 
+    // Ellenőrzés az adott oszlopban
+    for (let x = 0; x < size; x++) {
+        if (grid[x][col] === num && x !== row) {
+            return false;
+        }
+    }
+
+    // Ellenőrzés az adott 3x3-as blokkban
     const startRow = row - (row % boxSize);
     const startCol = col - (col % boxSize);
     for (let i = 0; i < boxSize; i++) {
@@ -93,11 +103,33 @@ export const isValidSudoku = (grid) => {
         for (let col = 0; col < size; col++) {
             const num = grid[row][col];
             if (num !== null) {
-                grid[row][col] = null; // Temporarily empty the cell
-                if (!isValid(grid, row, col, num)) {
-                    errors[row][col] = true;
+                // Ellenőrizzük a sort
+                for (let x = 0; x < size; x++) {
+                    if (grid[row][x] === num && x !== col) {
+                        errors[row][x] = true;
+                        errors[row][col] = true;
+                    }
                 }
-                grid[row][col] = num; // Restore the cell
+
+                // Ellenőrizzük az oszlopot
+                for (let x = 0; x < size; x++) {
+                    if (grid[x][col] === num && x !== row) {
+                        errors[x][col] = true;
+                        errors[row][col] = true;
+                    }
+                }
+
+                // Ellenőrizzük a 3x3-as blokkot
+                const startRow = row - (row % Math.sqrt(size));
+                const startCol = col - (col % Math.sqrt(size));
+                for (let i = 0; i < Math.sqrt(size); i++) {
+                    for (let j = 0; j < Math.sqrt(size); j++) {
+                        if (grid[i + startRow][j + startCol] === num && (i + startRow !== row || j + startCol !== col)) {
+                            errors[i + startRow][j + startCol] = true;
+                            errors[row][col] = true;
+                        }
+                    }
+                }
             }
         }
     }

@@ -10,12 +10,14 @@ const SudokuSolverPage = () => {
     const emptyErrors4x4 = Array(4).fill().map(() => Array(4).fill(false));
     const emptyErrors9x9 = Array(9).fill().map(() => Array(9).fill(false));
     const location = useLocation();
-    const initialDifficulty = location.state?.difficulty || localStorage.getItem('sudoku-difficulty') || 'easy';
+    const initialDifficulty = location.state?.difficulty || 'easy';
 
     const [difficulty, setDifficulty] = useState(initialDifficulty);
     const [grid, setGrid] = useState(() => {
         const savedGrid = JSON.parse(localStorage.getItem('sudoku-grid'));
-        return savedGrid || generateSudoku(initialDifficulty === 'easy' ? 4 : 9);
+        const savedDifficulty = localStorage.getItem('sudoku-difficulty') || initialDifficulty;
+        setDifficulty(savedDifficulty);
+        return savedGrid || generateSudoku(savedDifficulty === 'easy' ? 4 : 9);
     });
     const [errors, setErrors] = useState(grid.length === 4 ? emptyErrors4x4 : emptyErrors9x9);
     const [message, setMessage] = useState('');
