@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import SudokuGrid from '../components/SudokuGrid';
 import Modal from '../components/Modal';
-import { solveSudoku, generateSudoku } from '../utils/sudokuSolver';
+import { solveSudoku, generateSudoku, isValidSudoku } from '../utils/sudokuSolver';
 
 const SudokuSolverPage = () => {
     const emptyGrid = Array(9).fill().map(() => Array(9).fill(null));
+    const emptyErrors = Array(9).fill().map(() => Array(9).fill(false));
     const location = useLocation();
     const initialDifficulty = location.state?.difficulty || 'easy';
 
@@ -14,6 +15,7 @@ const SudokuSolverPage = () => {
         const savedGrid = JSON.parse(localStorage.getItem('sudoku-grid'));
         return savedGrid || generateSudoku(initialDifficulty);
     });
+    const [errors, setErrors] = useState(emptyErrors);
     const [message, setMessage] = useState('');
     const [showModal, setShowModal] = useState(false);
 
@@ -30,6 +32,7 @@ const SudokuSolverPage = () => {
             r.map((cell, colIndex) => (rowIndex === row && colIndex === col ? (value ? parseInt(value) : null) : cell))
         );
         setGrid(newGrid);
+        setErrors(isValidSudoku(newGrid));
     };
 
     const handleSolve = () => {
@@ -46,6 +49,7 @@ const SudokuSolverPage = () => {
 
     const handleReset = () => {
         setGrid(emptyGrid);
+        setErrors(emptyErrors);
         setMessage('');
     };
 
@@ -63,7 +67,7 @@ const SudokuSolverPage = () => {
                     <option value="hard">Hard</option>
                 </select>
             </label>
-            <SudokuGrid grid={grid} onChange={handleChange} />
+            <SudokuGrid grid={grid} onChange={handleChange} errors={errors} />
             <button onClick={handleSolve}>Solve</button>
             <button onClick={handleReset}>Reset</button>
             <Modal

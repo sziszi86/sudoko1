@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SudokuGrid = ({ grid, onChange }) => {
+const SudokuGrid = ({ grid, onChange, errors }) => {
     const handleInputChange = (row, col, value) => {
         // Csak 1-9 közötti értékeket engedélyezünk
         if (value === '' || (/^[1-9]$/.test(value))) {
@@ -18,6 +18,9 @@ const SudokuGrid = ({ grid, onChange }) => {
                     }
                     if ((rowIndex + 1) % 3 === 0 && rowIndex < 8) {
                         className += " border-bottom";
+                    }
+                    if (errors[rowIndex][colIndex]) {
+                        className += " error";
                     }
                     return (
                         <input

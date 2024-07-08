@@ -1,6 +1,9 @@
 const isValid = (grid, row, col, num) => {
     for (let x = 0; x < 9; x++) {
-        if (grid[row][x] === num || grid[x][col] === num) {
+        if (grid[row][x] === num && col !== x) {
+            return false;
+        }
+        if (grid[x][col] === num && row !== x) {
             return false;
         }
     }
@@ -9,7 +12,7 @@ const isValid = (grid, row, col, num) => {
     const startCol = col - (col % 3);
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-            if (grid[i + startRow][j + startCol] === num) {
+            if (grid[i + startRow][j + startCol] === num && (i + startRow !== row || j + startCol !== col)) {
                 return false;
             }
         }
@@ -83,4 +86,18 @@ export const generateSudoku = (difficulty) => {
     }
 
     return sudokuGrid;
+};
+
+export const isValidSudoku = (grid) => {
+    const errors = Array(9).fill().map(() => Array(9).fill(false));
+
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            if (grid[row][col] !== null && !isValid(grid, row, col, grid[row][col])) {
+                errors[row][col] = true;
+            }
+        }
+    }
+
+    return errors;
 };
