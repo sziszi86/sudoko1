@@ -3,20 +3,20 @@ import React from 'react';
 const SudokuGrid = ({ grid, onChange, errors }) => {
     const handleInputChange = (row, col, value) => {
         // Csak 1-9 közötti értékeket engedélyezünk
-        if (value === '' || (/^[1-9]$/.test(value))) {
+        if (value === '' || (/^[1-9]$/.test(value) && grid.length === 9) || (/^[1-4]$/.test(value) && grid.length === 4)) {
             onChange(row, col, value);
         }
     };
 
     return (
-        <div className="sudoku-grid">
+        <div className={`sudoku-grid grid-${grid.length}`}>
             {grid.map((row, rowIndex) =>
                 row.map((cell, colIndex) => {
-                    let className = "";
-                    if ((colIndex + 1) % 3 === 0 && colIndex < 8) {
+                    let className = "cell";
+                    if ((colIndex + 1) % Math.sqrt(grid.length) === 0 && colIndex < grid.length - 1) {
                         className += " border-right";
                     }
-                    if ((rowIndex + 1) % 3 === 0 && rowIndex < 8) {
+                    if ((rowIndex + 1) % Math.sqrt(grid.length) === 0 && rowIndex < grid.length - 1) {
                         className += " border-bottom";
                     }
                     if (errors[rowIndex][colIndex]) {

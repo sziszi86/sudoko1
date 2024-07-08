@@ -5,7 +5,6 @@ import Modal from './Modal';
 const SubscriptionForm = () => {
     const [email, setEmail] = useState('');
     const [difficulty, setDifficulty] = useState('easy');
-    const [message, setMessage] = useState('');
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
@@ -13,7 +12,6 @@ const SubscriptionForm = () => {
         e.preventDefault();
         // Fake API call
         setTimeout(() => {
-            setMessage('You have successfully subscribed to receive Sudoku puzzles!');
             setShowModal(true);
         }, 1000);
     };
@@ -39,18 +37,16 @@ const SubscriptionForm = () => {
                     Difficulty:
                     <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
                         <option value="easy">Easy</option>
-                        <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
                     </select>
                 </label>
                 <button type="submit">Subscribe</button>
-                {message && <p>{message}</p>}
             </form>
             <Modal
                 show={showModal}
                 onClose={handleCloseModal}
                 title="Subscription Successful"
-                message={message}
+                message="You have successfully subscribed to receive Sudoku puzzles!"
             />
         </div>
     );
