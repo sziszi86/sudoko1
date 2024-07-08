@@ -1,6 +1,13 @@
 import React from 'react';
 
 const SudokuGrid = ({ grid, onChange }) => {
+    const handleInputChange = (row, col, value) => {
+        // Csak 1-9 közötti értékeket engedélyezünk
+        if (value === '' || (Number(value) >= 1 && Number(value) <= 9)) {
+            onChange(row, col, value);
+        }
+    };
+
     return (
         <div className="sudoku-grid">
             {grid.map((row, rowIndex) =>
@@ -15,11 +22,9 @@ const SudokuGrid = ({ grid, onChange }) => {
                     return (
                         <input
                             key={`${rowIndex}-${colIndex}`}
-                            type="number"
-                            min="1"
-                            max="9"
+                            type="text"
                             value={cell || ''}
-                            onChange={(e) => onChange(rowIndex, colIndex, e.target.value)}
+                            onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
                             className={className}
                         />
                     );
