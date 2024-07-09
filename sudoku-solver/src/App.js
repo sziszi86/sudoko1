@@ -10,6 +10,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/solver" element={<SudokuSolverPage />} />
+
             </Routes>
         </Router>
     );
