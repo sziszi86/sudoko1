@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import SudokuGrid from '../components/SudokuGrid';
 import Modal from '../components/Modal';
-import { solveSudoku, generateSudoku, isValidSudoku } from '../utils/sudokuSolver';
+import { solveSudoku, isValidSudoku } from '../utils/sudokuSolver';
 
 const generateEmptyGrid = (size) => {
     return Array(size).fill().map(() => Array(size).fill(null));
@@ -81,25 +81,42 @@ const SudokuSolverPage = () => {
     };
 
     return (
-        <div>
-            <label>
-                Difficulty:
-                <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-                    <option value="easy">Easy (4x4)</option>
-                    <option value="hard">Hard (9x9)</option>
-                </select>
-            </label>
-            <SudokuGrid grid={grid} onChange={handleChange} errors={errors} solvedGrid={solvedGrid} userInputs={userInputs} setUserInputs={setUserInputs} />
-            <div className="flex">
-                <button className="btn-primary" onClick={handleSolve}>Megoldás</button>
-                <button onClick={handleReset}>Reset</button>
+        <div className="sudoku-page">
+            <div className="background-paper">
+                {Array.from({ length: 100 }, (_, i) => (
+                    <div
+                        key={i}
+                        className={`paper-corner-${Math.floor(Math.random() * 4)}`}
+                        style={{
+                            left: `${Math.random() * 100}%`,
+                            top: `${Math.random() * 100}%`,
+                            width: `${10 + Math.random() * 40}px`,
+                            height: `${10 + Math.random() * 40}px`,
+                        }}
+                    />
+                ))}
             </div>
-            <Modal
-                show={showModal}
-                onClose={handleCloseModal}
-                title={message === 'Sudoku solved!' ? 'Success' : 'Error'}
-                message={message}
-            />
+            <div className="content-container">
+                <h1>Sudoku Solver</h1>
+                <label>
+                    Difficulty:
+                    <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                        <option value="easy">Easy (4x4)</option>
+                        <option value="hard">Hard (9x9)</option>
+                    </select>
+                </label>
+                <SudokuGrid grid={grid} onChange={handleChange} errors={errors} solvedGrid={solvedGrid} userInputs={userInputs} setUserInputs={setUserInputs} />
+                <div className="flex">
+                    <button className="btn-primary btn" onClick={handleSolve}>Megoldás</button>
+                    <button className="btn-reset btn" onClick={handleReset}>Reset</button>
+                </div>
+                <Modal
+                    show={showModal}
+                    onClose={handleCloseModal}
+                    title={message === 'Sudoku solved!' ? 'Success' : 'Error'}
+                    message={message}
+                />
+            </div>
         </div>
     );
 };

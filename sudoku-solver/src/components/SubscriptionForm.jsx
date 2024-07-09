@@ -40,7 +40,7 @@ const SubscriptionForm = () => {
                         <option value="hard">Hard</option>
                     </select>
                 </label>
-                <button type="submit">Subscribe</button>
+                <button className="btn-primary btn mt-20" type="submit">Subscribe</button>
             </form>
             <Modal
                 show={showModal}

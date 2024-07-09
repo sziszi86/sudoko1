@@ -8,7 +8,7 @@ const LandingPage = () => {
             <h1>Welcome to Sudoku Solver</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
             <SubscriptionForm />
-            <Link to="/solver">Go to Sudoku Solver</Link>
+            <Link className="btn btn-reset mx-auto" to="/solver">Go to Sudoku Solver</Link>
         </div>
     );
 };
