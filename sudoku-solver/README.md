@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# Sudoku Megoldó Alkalmazás
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Bevezetés
 
-## Available Scripts
+Ez az alkalmazás egy webalapú Sudoku megoldó, amely lehetővé teszi a felhasználók számára, hogy beírjanak egy Sudoku feladványt, majd az alkalmazás megoldja azt, vagy hibajelzést ad, ha a feladvány megoldhatatlan. Az alkalmazás a React keretrendszerrel készült.
 
-In the project directory, you can run:
+## Fő Funkciók
 
-### `npm start`
+1. **Feladvány Megadása és Megoldása**:
+    - A felhasználók beírhatják a Sudoku feladványukat egy 4x4-es (könnyű) vagy 9x9-es (nehéz) rácsba.
+    - A „Megoldás” gomb megnyomásával az alkalmazás megpróbálja megoldani a feladványt.
+    - Ha a feladvány megoldható, az alkalmazás megjeleníti a megoldott rácsot.
+    - Ha a feladvány megoldhatatlan, hibaüzenet jelenik meg egy modal ablakban.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Email Feliratkozás**:
+    - A felhasználók feliratkozhatnak egy email listára, hogy Sudoku feladványokat kapjanak különböző nehézségi szinteken.
+    - A feliratkozás egy fake API híváson keresztül történik, és egy modal ablakban visszajelzést kapnak a felhasználók a sikeres feliratkozásról.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Felhasználói Adatok Mentése**:
+    - Az alkalmazás megjegyzi a felhasználók által beírt feladványokat és a kiválasztott nehézségi szintet, így azok újratöltéskor visszatöltődnek.
 
-### `npm test`
+4. **Interaktív és Felhasználóbarát Felület**:
+    - A felhasználói mezők kézírásos betűtípust kapnak, míg a generált mezők standard betűtípust használnak.
+    - A hibásan megadott mezők pirossal keretezve jelennek meg.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Telepítés és Futatás
 
-### `npm run build`
+1. **Telepítés**:
+    - Győződj meg róla, hogy a Node.js és a npm telepítve van a rendszereden.
+    - Klónozd le a projektet:
+      ```bash
+        https://github.com/sziszi86/sudoko1.git
+      ```
+    - Navigálj a projekt könyvtárába:
+      ```bash
+      cd sudoku-solver
+      ```
+    - Telepítsd a szükséges csomagokat:
+      ```bash
+      npm install
+      ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Fejlesztői Szerver Indítása**:
+    - Indítsd el a fejlesztői szervert:
+      ```bash
+      npm start
+      ```
+    - Nyisd meg a böngészőt és látogass el a [http://localhost:3000](http://localhost:3000) címre.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Felépítés
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **React**: A felhasználói felület megvalósítására.
+- **CSS**: Az alkalmazás stílusainak megadására.
+- **Local Storage**: A felhasználói adatok tárolására és visszatöltésére.
 
-### `npm run eject`
+## Források
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **React Dokumentáció**: [React Documentation](https://reactjs.org/docs/getting-started.html)
+- **Google Fonts**: [Google Fonts](https://fonts.google.com/)
+- **Sudoku Algoritmus**: ChatGpt4 es Claude AI: A Sudoku megoldó algoritmus egy egyszerű backtracking algoritmuson alapul, amely végigpróbálja a lehetséges megoldásokat, amíg megtalálja a helyeset.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Fejlesztési Lépések
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **Alapvető Strukturálás**:
+    - React komponensek létrehozása: `SudokuSolverPage`, `SubscriptionForm`, `SudokuGrid`, `Modal`.
+    - Alapvető stílusok és layout megadása.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Sudoku Megoldó Algoritmus**:
+    - A Sudoku megoldó algoritmus implementálása a `sudokuSolver.js` fájlban.
+    - Az algoritmus tesztelése különböző feladványokkal.
 
-## Learn More
+3. **Interaktív Funkciók**:
+    - Email feliratkozás megvalósítása fake API hívással.
+    - Felhasználói adatok mentése és visszatöltése a local storage segítségével.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Hibakezelés és Visszajelzés**:
+    - Hibás mezők kijelzése piros kerettel.
+    - Modal ablakok implementálása a visszajelzésekhez (sikeres feliratkozás, megoldhatatlan feladvány).
+    - A user más betűtipussal viszi be az értékeket.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Használat
 
-### Code Splitting
+1. Nyisd meg az alkalmazást a böngésződben.
+2. Válassz egy nehézségi szintet és add meg a Sudoku feladványt.
+3. Kattints a „Megoldás” gombra a feladvány megoldásához.
+4. Ha feliratkozásra van szükséged, add meg az email címed és válaszd ki a nehézségi szintet, majd kattints a „Feliratkozás” gombra.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Megjegyzések
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Ez az alkalmazás főleg a ChatGPT-4 motorjának segítségével készült. A Sudoku algoritmus logikáját különösen ennek a motornak a segítségével fejlesztettem, mivel korábban nem voltam jártas a Sudoku megoldásában. A projekt során sokat tanultam a Sudoku szabályairól és megoldási technikáiról.
+Időhiényában most nem használtam Css keretrendszereket, így sima változók nélküli egyszerű css kódokkal dolgoztam, mert nem volt elsődleges szempont.
+ Jó szórakozást!
