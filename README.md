@@ -29,7 +29,7 @@ Ez az alkalmazás egy webalapú Sudoku megoldó, amely lehetővé teszi a felhas
     - Győződj meg róla, hogy a Node.js és a npm telepítve van a rendszereden.
     - Klónozd le a projektet:
       ```bash
-      [git clone https://github.com/te-projekt/sudoku-solver.git](https://github.com/sziszi86/sudoko1.git)
+      git clone https://github.com/te-projekt/sudoku-solver.git](https://github.com/sziszi86/sudoko1.git
       ```
     - Navigálj a projekt könyvtárába:
       ```bash
