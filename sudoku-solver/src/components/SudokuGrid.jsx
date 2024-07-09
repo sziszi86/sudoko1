@@ -1,19 +1,17 @@
 import React from 'react';
 import './SudokuGrid.css';
 
-const SudokuGrid = ({ grid, onChange, errors, solvedGrid, userInputs, setUserInputs }) => {
+const SudokuGrid = ({ grid, onChange, errors, userInputs, setUserInputs, solvedGrid }) => {
+
     const handleInputChange = (row, col, value) => {
         // Csak 1-9 közötti értékeket engedélyezünk
         if (value === '' || (/^[1-9]$/.test(value) && grid.length === 9) || (/^[1-4]$/.test(value) && grid.length === 4)) {
             onChange(row, col, value);
+            const newUserInputs = userInputs.map((r, rowIndex) =>
+                r.map((cell, colIndex) => (rowIndex === row && colIndex === col ? true : cell))
+            );
+            setUserInputs(newUserInputs);
         }
-    };
-
-    const handleFocus = (row, col) => {
-        const newUserInputs = userInputs.map((r, rowIndex) =>
-            r.map((cell, colIndex) => (rowIndex === row && colIndex === col ? true : cell))
-        );
-        setUserInputs(newUserInputs);
     };
 
     return (
@@ -43,7 +41,6 @@ const SudokuGrid = ({ grid, onChange, errors, solvedGrid, userInputs, setUserInp
                             maxLength="1"
                             value={cell || ''}
                             onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
-                            onFocus={() => handleFocus(rowIndex, colIndex)}
                             className={className}
                         />
                     );

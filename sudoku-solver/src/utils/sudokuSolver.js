@@ -27,6 +27,22 @@ const isValid = (grid, row, col, num) => {
         }
     }
 
+    // Ellenőrzés az átlókban
+    if (row === col) {
+        for (let i = 0; i < size; i++) {
+            if (grid[i][i] === num && i !== row) {
+                return false;
+            }
+        }
+    }
+    if (row + col === size - 1) {
+        for (let i = 0; i < size; i++) {
+            if (grid[i][size - 1 - i] === num && i !== row) {
+                return false;
+            }
+        }
+    }
+
     return true;
 };
 
